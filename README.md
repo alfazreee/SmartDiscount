@@ -1,1 +1,1 @@
-# SmartDiscount
+# Smart Discount
