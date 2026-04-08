@@ -12,7 +12,9 @@
     <string name="input_invalid">Tidak boleh kosong.</string>
     <string name="logo">Logo aplikasi Smart Discount</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
-    <string name="deskripsi">Smart Discount adalah aplikasi Android sederhana yang digunakan untuk menghitung harga setelah diskon dengan cepat dan praktis. Pengguna hanya perlu memasukkan nilai harga awal dan besaran diskon, kemudian aplikasi akan menampilkan hasil perhitungan secara otomatis. Aplikasi ini juga dilengkapi dengan tampilan bon sehingga hasil perhitungan mudah dibagikan ke aplikasi lain.
-
-</string>
+    <string name="deskripsi">Smart Discount adalah aplikasi Android sederhana yang digunakan untuk menghitung harga setelah diskon dengan cepat dan praktis.
+        Pengguna hanya perlu memasukkan nilai harga awal dan besaran diskon, kemudian aplikasi akan menampilkan hasil perhitungan secara otomatis.
+        Aplikasi ini juga dilengkapi dengan tampilan bon sehingga hasil perhitungan mudah dibagikan ke aplikasi lain.
+    </string>
+    <string name="kembali">Kembali</string>
 </resources>
