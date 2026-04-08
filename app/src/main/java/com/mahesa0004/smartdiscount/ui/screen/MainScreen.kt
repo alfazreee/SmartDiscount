@@ -1,5 +1,7 @@
 package com.mahesa0004.smartdiscount.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Info
@@ -25,7 +29,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import com.mahesa0004.smartdiscount.R
 import com.mahesa0004.smartdiscount.ui.theme.SmartDiscountTheme
 import androidx.compose.material3.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -78,18 +83,21 @@ fun MainScreen(navController: NavHostController) {
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
 
-    var harga by remember { mutableStateOf("") }
-    var diskon by remember { mutableStateOf("") }
-    var isPersen by remember { mutableStateOf(true) }
-    var hasil by remember { mutableStateOf(0.0) }
-    var expanded by remember { mutableStateOf(false) }
+    var harga by rememberSaveable { mutableStateOf("") }
+    var diskon by rememberSaveable { mutableStateOf("") }
+    var isPersen by rememberSaveable { mutableStateOf(true) }
+    var hasil by rememberSaveable { mutableStateOf(0.0) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val options = listOf("%", "Rp")
-    var selectOption by remember { mutableStateOf(options[0]) }
-    var hargaError by remember { mutableStateOf(false) }
-    var diskonError by remember { mutableStateOf(false) }
+    var selectOption by rememberSaveable { mutableStateOf(options[0]) }
+    var hargaError by rememberSaveable { mutableStateOf(false) }
+    var diskonError by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier.fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -175,7 +183,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                     hargaValue - diskonValue
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.width(120.dp)
         ) {
             Text(stringResource(R.string.hitung))
         }
@@ -185,6 +193,18 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             text = "${stringResource(R.string.harga_akhir)}: Rp ${hasil.toInt()}",
             style = MaterialTheme.typography.titleLarge
         )
+        if (hasil > 0.0) {
+            val message = stringResource(R.string.bagikan_template, harga,
+                if (isPersen) "$diskon%" else "Rp $diskon",
+                "Rp ${hasil.toInt()}"
+                )
+            Button(
+                onClick = {shareData(context, message)},
+                modifier = Modifier.width(120.dp)
+            ) {
+                Text(text = stringResource(R.string.bagikan))
+            }
+        }
     }
 }
 
@@ -201,6 +221,16 @@ fun IconPicker(isError: Boolean, unit: String) {
 fun ErrorHint(isError: Boolean){
     if (isError){
         Text(text = stringResource(R.string.input_invalid))
+    }
+}
+
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
     }
 }
 
