@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.mahesa0004.smartdiscount.R
 import com.mahesa0004.smartdiscount.ui.theme.SmartDiscountTheme
 import androidx.compose.material3.*
+import androidx.compose.ui.text.input.KeyboardType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,6 +70,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
     val options = listOf("%", "Rp")
     var selectOption by remember { mutableStateOf(options[0]) }
+    var hargaError by remember { mutableStateOf(false) }
+    var diskonError by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -83,8 +89,13 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         )
         OutlinedTextField(
             value = harga,
-            onValueChange = {harga = it},
+            onValueChange = {
+              text -> harga = text.filter { it.isDigit() }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = {Text(stringResource(R.string.harga)) },
+            supportingText = {ErrorHint(hargaError)},
+            isError = hargaError,
             modifier = Modifier.fillMaxWidth()
         )
         Row(
@@ -93,8 +104,13 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         ) {
             OutlinedTextField(
                 value = diskon,
-                onValueChange = {diskon = it},
+                onValueChange = {
+                    text -> diskon = text.filter { it.isDigit() }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 label = {Text(stringResource(R.string.diskon)) },
+                supportingText = {ErrorHint(diskonError)},
+                isError = diskonError,
                 modifier = Modifier.weight(1f)
             )
             ExposedDropdownMenuBox(
@@ -131,6 +147,10 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         }
         Button(
             onClick = {
+                hargaError = (harga == "" || harga == "0")
+                diskonError = (diskon == "" || diskon == "0")
+                if (hargaError || diskonError)return@Button
+
                 val hargaValue = harga.toDoubleOrNull() ?: 0.0
                 val diskonValue = diskon.toDoubleOrNull() ?:0.0
 
@@ -153,6 +173,21 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun IconPicker(isError: Boolean, unit: String) {
+    if (isError){
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
+    } else {
+        Text(text = unit)
+    }
+}
+
+@Composable
+fun ErrorHint(isError: Boolean){
+    if (isError){
+        Text(text = stringResource(R.string.input_invalid))
+    }
+}
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)

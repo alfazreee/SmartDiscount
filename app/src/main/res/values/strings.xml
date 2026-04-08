@@ -9,5 +9,6 @@
     <string name="hitung">Hitung</string>
     <string name="hasil">Hasil</string>
     <string name="harga_akhir">Harga Akhir</string>
+    <string name="input_invalid">Tidak boleh kosong.</string>
     <string name="logo">Logo aplikasi Smart Discount</string>
 </resources>
