@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Smart Discount</string>
+    <string name="app_Intro">Aplikasi untuk menghitung harga dengan cepat dan praktis. Cobalah sekarang!</string>
+    <string name="harga">Harga</string>
+    <string name="diskon">Diskon</string>
+    <string name="tipe_diskon">Tipe Diskon :</string>
+    <string name="persen">Persen (%)</string>
+    <string name="nominal">Nominal (Rp)</string>
+    <string name="hitung">Hitung</string>
+    <string name="hasil">Hasil</string>
+    <string name="harga_akhir">Harga Akhir</string>
     <string name="logo">Logo aplikasi Smart Discount</string>
 </resources>
