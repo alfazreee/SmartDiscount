@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Discount</string>
+    <string name="app_Intro">An application for calculating prices quickly and easily. Try it now!</string>
+    <string name="harga">Price</string>
+    <string name="diskon">Discount</string>
+    <string name="tipe_diskon">Discount Type:</string>
+    <string name="persen">Percent (%)</string>
+    <string name="nominal">Nominal (Rp)</string>
+    <string name="hitung">Count</string>
+    <string name="hasil">Results</string>
+    <string name="harga_akhir">Final Price</string>
+    <string name="input_invalid">Cannot be empty.</string>
+    <string name="logo">Smart Discount application logo</string>
+    <string name="tentang_aplikasi">About Application</string>
+    <string name="deskripsi">Smart Discount is a simple Android app that quickly and conveniently calculates the discounted price. Users simply enter the initial price and discount amount, and the app will automatically display the calculation results. The app also allows users to share results with other apps.</string>
+    <string name="kembali">Return</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">Price: %1$s Discount: %2$s -------------------------- Result: %3$s</string>
+</resources>
