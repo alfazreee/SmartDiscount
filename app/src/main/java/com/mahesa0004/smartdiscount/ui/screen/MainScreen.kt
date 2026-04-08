@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.MaterialTheme
@@ -37,10 +38,13 @@ import com.mahesa0004.smartdiscount.R
 import com.mahesa0004.smartdiscount.ui.theme.SmartDiscountTheme
 import androidx.compose.material3.*
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.mahesa0004.smartdiscount.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -50,7 +54,18 @@ fun MainScreen() {
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
-                )
+                ),
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate(Screen.About.route)
+                    } ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = stringResource(R.string.tentang_aplikasi),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
             )
         }
     ) {
@@ -194,6 +209,6 @@ fun ErrorHint(isError: Boolean){
 @Composable
 fun MainScreenPreview() {
     SmartDiscountTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }
